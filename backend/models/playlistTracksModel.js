@@ -12,3 +12,11 @@ export const createPlaylistTrackService = async (
   );
   return result.rows;
 };
+
+export const getPlaylistTrackService = async (playlistId) => {
+  const result = await pool.query(
+    "SELECT pt.id AS playlist_track_id, pt.position, pt.added_by, pt.added_at, t.* FROM playlist_tracks pt JOIN tracks t ON pt.track_id = t.id WHERE pt.playlist_id = $1 ORDER BY pt.position ASC",
+    [playlistId]
+  );
+  return result.rows;
+};

@@ -1,4 +1,7 @@
-import { createPlaylistTrackService } from "../models/playlistTracksModel.js";
+import {
+  createPlaylistTrackService,
+  getPlaylistTrackService,
+} from "../models/playlistTracksModel.js";
 
 // Standard response
 const handleResponse = (res, _status, message, data = null) => {
@@ -26,6 +29,22 @@ export const createPlaylistTrack = async (req, res, next) => {
       201,
       "Playlist track created successfully",
       newPlaylistTrack
+    );
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getPlaylistTracks = async (req, res, next) => {
+  const { playlistId } = req.params;
+
+  try {
+    const playlistTracks = await getPlaylistTrackService(playlistId);
+    handleResponse(
+      res,
+      200,
+      "Playlist tracks fetched successfully",
+      playlistTracks
     );
   } catch (err) {
     next(err);

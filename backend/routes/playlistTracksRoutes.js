@@ -1,9 +1,15 @@
 import express from "express";
-import { createPlaylistTrack } from "../controllers/playlistTracksControllers.js";
+import {
+  createPlaylistTrack,
+  getPlaylistTracks,
+} from "../controllers/playlistTracksControllers.js";
 
 const router = express.Router();
 
 // ADD a track to a playlist
-router.post("/:playlistId/tracks", createPlaylistTrack);
+router.post("/playlists/:playlistId/tracks", createPlaylistTrack);
+
+// GET all tracks in a playlist
+router.get("/playlists/:playlistId/tracks", getPlaylistTracks);
 
 export default router;

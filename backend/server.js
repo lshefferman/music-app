@@ -23,7 +23,7 @@ app.use(cors());
 
 // routes
 app.use("/api/playlists", playlistRoutes);
-app.use("/api/playlists", playlistTrackRoutes);
+app.use("/api", playlistTrackRoutes);
 app.use("/api/search", searchRoutes);
 
 // Create tables and before starting server
