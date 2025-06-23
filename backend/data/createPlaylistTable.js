@@ -4,10 +4,10 @@ import pool from "../config/db.js";
 const createPlaylistTable = async () => {
   const queryText = `
     CREATE TABLE IF NOT EXISTS playlists (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(150) NOT NULL,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL,
     description TEXT, 
-    creator_id INTEGER,
+    creator_id INT,
     is_public BOOLEAN DEFAULT true,
     created_at TIMESTAMP DEFAULT NOW()
 )

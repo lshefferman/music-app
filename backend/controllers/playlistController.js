@@ -15,7 +15,6 @@ const handleResponse = (res, _status, message, data = null) => {
   });
 };
 
-// update for playlist model
 export const createPlaylist = async (req, res, next) => {
   const { name, description, creatorId } = req.body;
 
