@@ -12,18 +12,23 @@ export const getPlaylistByIdService = async (id) => {
   return result.rows[0];
 };
 
-export const createPlaylistService = async (name, description, creatorId) => {
+export const createPlaylistService = async (
+  name,
+  description,
+  image,
+  creatorId
+) => {
   const result = await pool.query(
-    "INSERT INTO playlists (name, description, creator_id) VALUES ($1, $2, $3) RETURNING *",
-    [name, description, creatorId]
+    "INSERT INTO playlists (name, description, image, creator_id) VALUES ($1, $2, $3, $4) RETURNING *",
+    [name, description, image, creatorId]
   );
   return result.rows;
 };
 
-export const editPlaylistService = async (id, name, description) => {
+export const editPlaylistService = async (id, name, image, description) => {
   const result = await pool.query(
-    "UPDATE playlists SET name = $1, description = $2 WHERE id = $3 RETURNING *",
-    [name, description, id]
+    "UPDATE playlists SET name = $1, description = $2, image = $3 WHERE id = $4 RETURNING *",
+    [name, description, image, id]
   );
   return result.rows[0];
 };

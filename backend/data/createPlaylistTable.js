@@ -7,6 +7,7 @@ const createPlaylistTable = async () => {
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
     description TEXT, 
+    image TEXT,
     creator_id INT,
     is_public BOOLEAN DEFAULT true,
     created_at TIMESTAMP DEFAULT NOW()

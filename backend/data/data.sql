@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS playlists (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(150) NOT NULL,
     description TEXT, 
+    image TEXT,
     -- creator_id UUID REFERENCES users(id),
     creator_id INT,
     is_public BOOLEAN DEFAULT true,

@@ -16,12 +16,13 @@ const handleResponse = (res, _status, message, data = null) => {
 };
 
 export const createPlaylist = async (req, res, next) => {
-  const { name, description, creatorId } = req.body;
+  const { name, description, image, creatorId } = req.body;
 
   try {
     const newPlaylist = await createPlaylistService(
       name,
       description,
+      image,
       creatorId
     );
     handleResponse(res, 201, "Playlist created successfully", newPlaylist);
