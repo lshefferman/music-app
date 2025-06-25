@@ -1,17 +1,15 @@
 import pool from "../config/db.js";
 
-// NEED TO ADD USER TABLE DEPENDENCY TO CREATOR ID LATER
 const createPlaylistTracksTable = async () => {
   const queryText = `
     CREATE TABLE IF NOT EXISTS playlist_tracks (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     playlist_id UUID REFERENCES playlists(id) ON DELETE CASCADE,
     track_id UUID REFERENCES tracks(id),
-    added_by INT,
+    added_by UUID REFERENCES users(id),
     position INT,
     added_at TIMESTAMP DEFAULT now()
-)
-  `;
+  )`;
 
   try {
     console.log(queryText);
