@@ -25,7 +25,14 @@ function EditPlaylistModal({ playlistId }) {
         {/* Modal header */}
         <h3 className="font-bold text-xl mb-8">Edit playlist</h3>
 
-        <form onSubmit={updatePlaylist(playlistId)} className="space-y-6">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            updatePlaylist(playlistId);
+            document.getElementById("edit-playlist-modal")?.close();
+          }}
+          className="space-y-6"
+        >
           <div className="grid gap-6">
             {/* Playlist name input */}
             <div className="form-control">

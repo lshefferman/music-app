@@ -9,6 +9,8 @@ export const usePlaylistStore = create((set, get) => ({
   currentPlaylist: null,
   tracks: [],
   loading: false,
+  loadingPlaylist: false,
+  loadingTracks: false,
   error: null,
 
   formData: {
@@ -74,13 +76,13 @@ export const usePlaylistStore = create((set, get) => ({
   },
 
   fetchPlaylistInfo: async (id) => {
-    set({ loading: true });
+    set({ loading: true, error: null });
     try {
       const res = await axios.get(`${BASE_URL}/api/playlists/${id}`);
-      set({ currentPlaylist: res.data.data, error: null });
+      set({ currentPlaylist: res.data.data });
     } catch (err) {
-      console.error("Fetch playlist info error:", err);
-      set({ currentPlaylist: null, error: "Something went wrong" });
+      console.error("Failed to fetch playlist", err);
+      set({ error: "Failed to load playlist." });
     } finally {
       set({ loading: false });
     }

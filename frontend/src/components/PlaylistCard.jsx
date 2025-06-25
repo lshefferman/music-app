@@ -28,13 +28,6 @@ function PlaylistCard({ playlist }) {
         <p className="text-base text-gray-500">{playlist.description}</p>
 
         <div className="card-actions justify-end mt-auto">
-          <Link
-            to={`/playlist/${playlist.id}`}
-            className="btn btn-sm btn-info btn-outline"
-          >
-            <EditIcon className="size-4 mr-1" />
-            Edit
-          </Link>
           <button
             className="btn btn-sm btn-error btn-outline"
             onClick={() => deletePlaylist(playlist.id)}
