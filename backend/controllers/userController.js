@@ -24,20 +24,27 @@ const handleResponse = (res, status, message, data = null) => {
 // Login
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
+
   if (!email || !password)
     return handleResponse(res, 400, "Email and password are required");
 
   try {
+    // debug
+    // console.log("Checking user:", email);
     const user = await findUserByEmail(email);
+    // console.log("User found:", user);
+
     if (!user) return handleResponse(res, 401, "Invalid credentials");
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) return handleResponse(res, 401, "Invalid credentials");
 
-    const token = createToken(user.id);
-    handleResponse(res, 200, "User found", user.email, token);
+    const { id } = user;
+    const token = createToken(id);
+
+    handleResponse(res, 200, "User found", { id, email, token });
   } catch (err) {
-    console.error("Login error:", err);
+    console.error("Login error:", err.message, err.stack);
     handleResponse(res, 500, "Server error");
   }
 };
@@ -63,11 +70,13 @@ export const signupUser = async (req, res) => {
     const salt = await bcrypt.genSalt(SALT_ROUNDS);
     const hash = await bcrypt.hash(password, salt);
     const newUser = await createUser(username, email, hash);
+
+    const { id, email: savedEmail } = newUser;
     const token = createToken(newUser.id);
 
-    handleResponse(res, 200, "User created", newUser.email, token);
+    handleResponse(res, 200, "User created", { id, email: savedEmail, token });
   } catch (err) {
-    console.error("Signup error:", err);
+    console.error("Signup error:", err.message, err.stack);
     handleResponse(res, 500, "Server error");
   }
 };

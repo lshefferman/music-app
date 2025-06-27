@@ -3,22 +3,27 @@ import { usePlaylistStore } from "../store/usePlaylistStore";
 import { FileMusic, PlusCircleIcon } from "lucide-react";
 import PlaylistCard from "../components/PlaylistCard";
 import AddPlaylistModal from "../components/AddPlaylistModal";
+import { useUserStore } from "../store/useUserStore";
 
 function DisplayPlaylistsPage() {
   const { playlists, loading, error, fetchPlaylists } = usePlaylistStore();
+  const token = useUserStore((state) => state.token);
 
   useEffect(() => {
-    fetchPlaylists();
-  }, [fetchPlaylists]);
+    if (token) {
+      fetchPlaylists();
+    }
+  }, [token, fetchPlaylists]);
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
         <button
           className="btn btn-primary"
-          onClick={() =>
-            document.getElementById("add-playlist-modal").showModal()
-          }
+          onClick={() => {
+            usePlaylistStore.getState().resetForm();
+            document.getElementById("add-playlist-modal").showModal();
+          }}
         >
           <PlusCircleIcon className="size-5 mr-2" />
           Add Playlist

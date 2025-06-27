@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
@@ -6,8 +6,11 @@ import PlaylistPage from "./pages/PlaylistPage";
 import DisplayPlaylistsPage from "./pages/DisplayPlaylistsPage";
 import LoginForm from "./pages/LoginForm";
 import SignupForm from "./pages/SignupForm";
+import { useUserStore } from "./store/useUserStore";
 
 function App() {
+  const user = useUserStore((state) => state.user);
+
   return (
     <div>
       <div
@@ -16,9 +19,18 @@ function App() {
       >
         <Navbar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/signup" element={<SignupForm />} />
+          <Route
+            path="/"
+            element={user ? <HomePage /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/login"
+            element={!user ? <LoginForm /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/signup"
+            element={!user ? <SignupForm /> : <Navigate to="/" />}
+          />
           <Route path="/playlist" element={<DisplayPlaylistsPage />} />
           <Route path="/playlist/:id" element={<PlaylistPage />} />
         </Routes>

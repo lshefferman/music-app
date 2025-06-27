@@ -9,8 +9,7 @@ import {
 } from "lucide-react";
 
 function EditPlaylistModal({ playlistId }) {
-  const { formData, setFormData, updatePlaylist, loading, resetForm } =
-    usePlaylistStore();
+  const { formData, setFormData, updatePlaylist, loading } = usePlaylistStore();
 
   return (
     <dialog id="edit-playlist-modal" className="modal">
@@ -29,7 +28,6 @@ function EditPlaylistModal({ playlistId }) {
           onSubmit={(e) => {
             e.preventDefault();
             updatePlaylist(playlistId);
-            document.getElementById("edit-playlist-modal")?.close();
           }}
           className="space-y-6"
         >
@@ -49,7 +47,7 @@ function EditPlaylistModal({ playlistId }) {
                   type="text"
                   placeholder="Enter playlist name"
                   className="input input-bordered w-full pl-10 py-3 focus:input-primary"
-                  value={formData.name}
+                  value={formData.name || ""}
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
@@ -72,7 +70,7 @@ function EditPlaylistModal({ playlistId }) {
                   type="text"
                   placeholder="Enter playlist description"
                   className="input input-bordered w-full pl-10 py-3 focus:input-primary"
-                  value={formData.description}
+                  value={formData.description || ""}
                   onChange={(e) =>
                     setFormData({ ...formData, description: e.target.value })
                   }
@@ -95,33 +93,9 @@ function EditPlaylistModal({ playlistId }) {
                   type="text"
                   placeholder="https://example.com/image.jpg"
                   className="input input-bordered w-full pl-10 py-3 focus:input-primary"
-                  value={formData.image}
+                  value={formData.image || ""}
                   onChange={(e) =>
                     setFormData({ ...formData, image: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-
-            {/* Creator ID */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-base font-medium">
-                  Creator ID
-                </span>
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/50">
-                  <User2Icon className="size-5" />
-                </div>
-                <input
-                  type="number"
-                  min="0"
-                  placeholder="0"
-                  className="input input-bordered w-full pl-10 py-3 focus:input-primary"
-                  value={formData.creatorId}
-                  onChange={(e) =>
-                    setFormData({ ...formData, creatorId: e.target.value })
                   }
                 />
               </div>
@@ -130,9 +104,9 @@ function EditPlaylistModal({ playlistId }) {
 
           {/* Actions */}
           <div className="modal-action">
-            <form method="dialog">
-              <button className="btn btn-ghost">Cancel</button>
-            </form>
+            <button method="dialog" className="btn btn-ghost">
+              Cancel
+            </button>
             <button type="submit" className="btn btn-primary min-w-[120px]">
               {loading ? (
                 <span className="loading loading-spinner loading-sm" />

@@ -31,8 +31,9 @@ export const useUserStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const res = await axios.post(`${BASE_URL}/api/user/signup`, formData);
-      const { email, token } = res.data;
-      const user = { email };
+      const { id, email, token } = res.data.data;
+
+      const user = { id, email };
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("token", token);
       set({ user, token });
@@ -52,8 +53,9 @@ export const useUserStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const res = await axios.post(`${BASE_URL}/api/user/login`, formData);
-      const { email, token } = res.data;
-      const user = { email };
+      const { id, email, token } = res.data.data;
+
+      const user = { id, email };
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("token", token);
       set({ user, token });

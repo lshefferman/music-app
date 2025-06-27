@@ -4,7 +4,12 @@ import {
   getPlaylistTracks,
 } from "../controllers/playlistTracksControllers.js";
 
+// auth middleware
+import authMiddleware from "../middleware/authMiddleware.js";
+
 const router = express.Router();
+
+router.use(authMiddleware);
 
 // ADD a track to a playlist
 router.post("/playlists/:playlistId/tracks", createPlaylistTrack);

@@ -1,5 +1,6 @@
 import { create } from "zustand";
-import axios from "axios";
+import { toast } from "react-hot-toast";
+import api from "../utils/api";
 
 const BASE_URL = "http://localhost:13333";
 
@@ -20,9 +21,7 @@ export const useTrackStore = create((set) => ({
     }
     set({ loading: true });
     try {
-      const res = await axios.get(
-        `${BASE_URL}/api/search?q=${encodeURIComponent(query)}`
-      );
+      const res = await api.get(`/search?q=${encodeURIComponent(query)}`);
       set({ searchResults: res.data.data, error: null });
     } catch (err) {
       set({ error: "Failed to fetch tracks" });
@@ -34,9 +33,7 @@ export const useTrackStore = create((set) => ({
   addTrackToPlaylist: async (playlistId, trackId) => {
     try {
       set({ loading: true });
-      await axios.post(`${BASE_URL}/api/playlists/${playlistId}/tracks`, {
-        trackId,
-      });
+      await api.post(`/playlists/${playlistId}/tracks`, { trackId });
       toast.success("Track added to playlist");
     } catch (err) {
       toast.error("Failed to add track to playlist");

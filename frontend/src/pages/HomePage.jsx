@@ -22,7 +22,7 @@ function HomePage() {
       <section className="mt-10">
         <Link to={"/playlist"}>
           <h2 className="text-2xl font-semibold mb-4 hover:underline hover:text-primary transition">
-            Featured Playlists
+            Your Playlists
           </h2>
         </Link>
         <div className="grid grid-cols-3 gap-6">

@@ -1,7 +1,15 @@
 import pool from "../config/db.js";
 
-export const getPlaylistsService = async () => {
-  const result = await pool.query("SELECT * FROM playlists");
+export const getPlaylistsService = async (userId) => {
+  const result = await pool.query(
+    `
+    SELECT DISTINCT p.*
+    FROM playlists p
+    LEFT JOIN playlist_collaborators pc ON p.id = pc.playlist_id
+    WHERE p.creator_id = $1 OR pc.user_id = $1
+    `,
+    [userId]
+  );
   return result.rows;
 };
 
@@ -25,7 +33,7 @@ export const createPlaylistService = async (
   return result.rows;
 };
 
-export const editPlaylistService = async (id, name, image, description) => {
+export const editPlaylistService = async (id, name, description, image) => {
   const result = await pool.query(
     "UPDATE playlists SET name = $1, description = $2, image = $3 WHERE id = $4 RETURNING *",
     [name, description, image, id]

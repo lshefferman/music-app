@@ -10,6 +10,7 @@ import {
 
 function AddPlaylistModal() {
   const { addPlaylist, formData, setFormData, loading } = usePlaylistStore();
+
   return (
     <dialog id="add-playlist-modal" className="modal">
       <div className="modal-box">
@@ -40,7 +41,7 @@ function AddPlaylistModal() {
                   type="text"
                   placeholder="Enter playlist name"
                   className="input input-bordered w-full pl-10 py-3 focus:input-primary transition-colors duration-200"
-                  value={formData.name}
+                  value={formData.name || ""}
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
@@ -63,7 +64,7 @@ function AddPlaylistModal() {
                   type="text"
                   placeholder="Enter playlist description"
                   className="input input-bordered w-full pl-10 py-3 focus:input-primary transition-colors duration-200"
-                  value={formData.description}
+                  value={formData.description || ""}
                   onChange={(e) =>
                     setFormData({ ...formData, description: e.target.value })
                   }
@@ -86,33 +87,9 @@ function AddPlaylistModal() {
                   type="text"
                   placeholder="https://example.com/image.jpg"
                   className="input input-bordered w-full pl-10 py-3 focus:input-primary transition-colors duration-200"
-                  value={formData.image}
+                  value={formData.image || ""}
                   onChange={(e) =>
                     setFormData({ ...formData, image: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-
-            {/* Creator id input CHANGE LATER!!! */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-base font-medium">
-                  Creator id
-                </span>
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/50">
-                  <User2Icon className="size-5" />
-                </div>
-                <input
-                  type="number"
-                  min="0"
-                  placeholder="0"
-                  className="input input-bordered w-full pl-10 py-3 focus:input-primary transition-colors duration-200"
-                  value={formData.creatorId}
-                  onChange={(e) =>
-                    setFormData({ ...formData, creatorId: e.target.value })
                   }
                 />
               </div>
@@ -121,9 +98,9 @@ function AddPlaylistModal() {
 
           {/* Modal actions */}
           <div className="modal-action">
-            <form method="dialog">
-              <button className="btn btn-ghost">Cancel</button>
-            </form>
+            <button method="dialog" className="btn btn-ghost">
+              Cancel
+            </button>
             <button
               type="submit"
               className="btn btn-primary min-w-[120px]"
@@ -131,7 +108,6 @@ function AddPlaylistModal() {
                 !formData.name ||
                 !formData.description ||
                 !formData.image ||
-                !formData.creatorId ||
                 loading
               }
             >

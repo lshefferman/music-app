@@ -7,7 +7,12 @@ import {
   editPlaylist,
 } from "../controllers/playlistController.js";
 
+// auth middleware
+import authMiddleware from "../middleware/authMiddleware.js";
+
 const router = express.Router();
+
+router.use(authMiddleware);
 
 // GET all playlists
 router.get("/", getPlaylists);

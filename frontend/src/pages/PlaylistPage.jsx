@@ -79,9 +79,18 @@ function PlaylistPage() {
 
           {/* Edit Button */}
           <button
-            onClick={() =>
-              document.getElementById("edit-playlist-modal").showModal()
-            }
+            onClick={() => {
+              const playlist = usePlaylistStore.getState().currentPlaylist;
+              if (playlist) {
+                setFormData({
+                  name: playlist.name,
+                  description: playlist.description,
+                  image: playlist.image,
+                  creatorId: playlist.creatorId,
+                });
+              }
+              document.getElementById("edit-playlist-modal").showModal();
+            }}
             className="btn btn-outline btn-sm mt-4"
           >
             <PencilIcon className="size-4 mr-1" />
