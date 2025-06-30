@@ -6,11 +6,18 @@ export const createPlaylistTrackService = async (
   userId,
   position
 ) => {
+  const trackExists = await pool.query("SELECT id FROM tracks WHERE id = $1", [
+    trackId,
+  ]);
+  if (trackExists.rowCount === 0) {
+    throw new Error("Track does not exist");
+  }
+
   const result = await pool.query(
     "INSERT INTO playlist_tracks (playlist_id, track_id, added_by, position) VALUES ($1, $2, $3, $4) RETURNING *",
     [playlistId, trackId, userId, position]
   );
-  return result.rows;
+  return result.rows[0];
 };
 
 export const getPlaylistTrackService = async (playlistId) => {
@@ -19,4 +26,12 @@ export const getPlaylistTrackService = async (playlistId) => {
     [playlistId]
   );
   return result.rows;
+};
+
+export const deletePlaylistTrackService = async (playlistId, trackId) => {
+  const result = await pool.query(
+    `DELETE FROM playlist_tracks WHERE playlist_id = $1 AND track_id = $2 RETURNING *`,
+    [playlistId, trackId]
+  );
+  return result.rows[0];
 };

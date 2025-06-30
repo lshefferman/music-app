@@ -24,11 +24,12 @@ export const createPlaylistService = async (
   name,
   description,
   image,
+  isCollaborative,
   creatorId
 ) => {
   const result = await pool.query(
-    "INSERT INTO playlists (name, description, image, creator_id) VALUES ($1, $2, $3, $4) RETURNING *",
-    [name, description, image, creatorId]
+    "INSERT INTO playlists (name, description, image, is_collaborative, creator_id) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+    [name, description, image, isCollaborative, creatorId]
   );
   return result.rows;
 };

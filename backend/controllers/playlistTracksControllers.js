@@ -1,6 +1,7 @@
 import {
   createPlaylistTrackService,
   getPlaylistTrackService,
+  deletePlaylistTrackService,
 } from "../models/playlistTracksModel.js";
 
 // Standard response
@@ -14,8 +15,8 @@ const handleResponse = (res, _status, message, data = null) => {
 
 export const createPlaylistTrack = async (req, res, next) => {
   const { playlistId } = req.params;
-  const { trackId, position, userId } = req.body;
-  // const userId = req.user.id; // from auth middleware when added
+  const { trackId, position } = req.body;
+  const userId = req.user.id;
 
   try {
     const newPlaylistTrack = await createPlaylistTrackService(
@@ -45,6 +46,29 @@ export const getPlaylistTracks = async (req, res, next) => {
       200,
       "Playlist tracks fetched successfully",
       playlistTracks
+    );
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const deletePlaylistTrack = async (req, res, next) => {
+  const { playlistId, trackId } = req.params;
+  const userId = req.user.id;
+
+  try {
+    const deletedPlaylistTrack = await deletePlaylistTrackService(
+      playlistId,
+      trackId
+    );
+    if (!deletedPlaylistTrack) {
+      return handleResponse(res, 404, "Track not found in this playlist");
+    }
+    handleResponse(
+      res,
+      200,
+      "Playlist track deleted successfully",
+      deletedPlaylistTrack
     );
   } catch (err) {
     next(err);

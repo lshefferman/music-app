@@ -6,6 +6,7 @@ import playlistRoutes from "./routes/playlistRoutes.js";
 import playlistTrackRoutes from "./routes/playlistTracksRoutes.js";
 import searchRoutes from "./routes/searchRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import collaboratorRoutes from "./routes/collaboratorRoutes.js";
 
 import createUsersTable from "./data/createUsersTable.js";
 import createPlaylistTable from "./data/createPlaylistTable.js";
@@ -26,6 +27,7 @@ app.use(cors());
 // routes
 app.use("/api/user", userRoutes);
 app.use("/api/playlists", playlistRoutes);
+app.use("/playlists/:id/collaborators", collaboratorRoutes);
 app.use("/api", playlistTrackRoutes);
 app.use("/api/search", searchRoutes);
 

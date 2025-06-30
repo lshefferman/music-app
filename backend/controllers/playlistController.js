@@ -1,3 +1,4 @@
+import { addCollaboratorService } from "../models/collaboratorModel.js";
 import {
   createPlaylistService,
   deletePlaylistService,
@@ -16,7 +17,7 @@ const handleResponse = (res, _status, message, data = null) => {
 };
 
 export const createPlaylist = async (req, res, next) => {
-  const { name, description, image } = req.body;
+  const { name, description, image, isCollaborative } = req.body;
   const creatorId = req.user.id;
 
   try {
@@ -24,8 +25,12 @@ export const createPlaylist = async (req, res, next) => {
       name,
       description,
       image,
+      isCollaborative,
       creatorId
     );
+
+    await addCollaboratorService(playlist.id, creatorId, "owner");
+
     handleResponse(res, 201, "Playlist created successfully", newPlaylist);
   } catch (err) {
     next(err);

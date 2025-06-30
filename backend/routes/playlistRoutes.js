@@ -9,6 +9,7 @@ import {
 
 // auth middleware
 import authMiddleware from "../middleware/authMiddleware.js";
+import { requireCollaboratorRole } from "../utils/roles.js";
 
 const router = express.Router();
 
@@ -27,6 +28,6 @@ router.post("/", createPlaylist);
 router.delete("/:id", deletePlaylist);
 
 // EDIT a playlist
-router.patch("/:id", editPlaylist);
+router.patch("/:id", requireCollaboratorRole("owner"), editPlaylist);
 
 export default router;

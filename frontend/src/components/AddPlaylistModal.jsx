@@ -94,6 +94,15 @@ function AddPlaylistModal() {
                 />
               </div>
             </div>
+            {/* Is collaborative button*/}
+            <input
+              type="checkbox"
+              checked={formData.is_collaborative}
+              onChange={(e) =>
+                setFormData({ ...formData, is_collaborative: e.target.checked })
+              }
+            />
+            <label>Make Collaborative</label>
           </div>
 
           {/* Modal actions */}

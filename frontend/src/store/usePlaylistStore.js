@@ -16,13 +16,19 @@ export const usePlaylistStore = create((set, get) => ({
     name: "",
     description: "",
     image: "",
+    is_collaborative: false,
   },
 
   setFormData: (formData) => set({ formData }),
 
   resetForm: () =>
     set({
-      formData: { name: "", description: "", image: "" },
+      formData: {
+        name: "",
+        description: "",
+        image: "",
+        is_collaborative: false,
+      },
     }),
 
   addPlaylist: async (e) => {
