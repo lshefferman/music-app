@@ -100,15 +100,27 @@ function EditPlaylistModal({ playlistId }) {
                 />
               </div>
             </div>
-            {/* Is collaborative button */}
-            <input
-              type="checkbox"
-              checked={formData.is_collaborative}
-              onChange={(e) =>
-                setFormData({ ...formData, is_collaborative: e.target.checked })
-              }
-            />
-            <label>Make Collaborative</label>
+            {/* Make Collaborative checkbox */}
+            <div className="form-control flex items-center space-x-3 mt-4">
+              <input
+                type="checkbox"
+                id="is_collaborative"
+                checked={formData.is_collaborative}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    is_collaborative: e.target.checked,
+                  })
+                }
+                className="checkbox checkbox-primary"
+              />
+              <label
+                htmlFor="is_collaborative"
+                className="label-text text-base font-medium"
+              >
+                Make Collaborative
+              </label>
+            </div>
           </div>
 
           {/* Actions */}
